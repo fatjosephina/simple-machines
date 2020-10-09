@@ -174,18 +174,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        canGrab = true;
-        handleName = collision.gameObject.name;
-        handleObject = collision.gameObject.transform.parent.gameObject;
-        handleTransform = handleObject.transform;
+        if (collision.gameObject.CompareTag("Handle"))
+        {
+            canGrab = true;
+            handleName = collision.gameObject.name;
+            handleObject = collision.gameObject.transform.parent.gameObject;
+            handleTransform = handleObject.transform;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        canGrab = false;
-        handleName = null;
-        handleObject = null;
-        handleTransform = null;
-        isGrabbingHandle = false;
+        if (collision.gameObject.CompareTag("Handle"))
+        {
+            canGrab = false;
+            handleName = null;
+            handleObject = null;
+            handleTransform = null;
+            isGrabbingHandle = false;
+        }
     }
 }
