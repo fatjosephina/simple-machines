@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed;
+    private float moveSpeed = 4f;
 
     private Animator animator;
     private new Rigidbody2D rigidbody;
     private Vector3 positionChange;
+    private float grabFloat = 0;
+
 
     private void Start()
     {
@@ -22,11 +24,7 @@ public class PlayerMovement : MonoBehaviour
         positionChange = Vector3.zero;
         positionChange.x = Input.GetAxisRaw("Horizontal");
         positionChange.y = Input.GetAxisRaw("Vertical");
-
-        /*if (positionChange != Vector3.zero)
-        {
-            MovePlayer();
-        }*/
+        grabFloat = Input.GetAxisRaw("Jump");
     }
 
     private void FixedUpdate()
@@ -47,10 +45,23 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isMoving", false);
         }
+        CheckIfGrabbing();
     }
 
     private void MovePlayer()
     {
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+    }
+
+    private void CheckIfGrabbing()
+    {
+        if (grabFloat != 0)
+        {
+            animator.SetBool("isGrabbing", true);
+        }
+        else
+        {
+            animator.SetBool("isGrabbing", false);
+        }
     }
 }
