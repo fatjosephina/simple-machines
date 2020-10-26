@@ -106,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         {
             handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+            handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
+            gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
         }
         else if (handleName != null)
         {
