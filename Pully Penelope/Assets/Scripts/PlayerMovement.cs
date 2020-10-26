@@ -112,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
         else if (handleName != null)
         {
             handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            handleObject.GetComponent<HandleParent>().attachedObject = null;
+            gameObject.GetComponent<HandleParent>().attachedObject = null;
         }
     }
 

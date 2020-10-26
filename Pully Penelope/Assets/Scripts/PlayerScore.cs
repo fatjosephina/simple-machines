@@ -18,6 +18,7 @@ public class PlayerScore : MonoBehaviour
 
     private void Start()
     {
+        quotaText = GameObject.FindWithTag("Quota").GetComponent<TMP_Text>();
         quotaText.text = "Quota : " + quota;
         button = quotaText.GetComponent<Button>();
         button.enabled = false;
