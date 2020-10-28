@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Box
   - Quota
+  - Blade
   layers:
   - Default
   - TransparentFX
