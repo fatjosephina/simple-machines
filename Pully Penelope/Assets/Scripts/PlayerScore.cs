@@ -14,13 +14,18 @@ public class PlayerScore : MonoBehaviour
     private Color32 green = new Color32(56, 216, 76, 255);
     private int flashRepeat = 4;
     private float flashDuration = 0.25f;
+    [SerializeField]
     private Button button;
+    SpriteRenderer spriteRenderer;
+    private float dieDuration = 1f;
 
     private void Start()
     {
+        quotaText = GameObject.FindWithTag("Quota").GetComponent<TMP_Text>();
         quotaText.text = "Quota : " + quota;
         button = quotaText.GetComponent<Button>();
         button.enabled = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -51,6 +56,14 @@ public class PlayerScore : MonoBehaviour
                 StartCoroutine(FlashRedCo());
             }
         }
+
+        if (collision.gameObject.CompareTag("Blade"))
+        {
+            quotaText.text = "You Lose! Press here to replay!";
+            button.enabled = true;
+            quotaText.color = red;
+            StartCoroutine(DieCo());
+        }
     }
 
     private IEnumerator FlashRedCo()
@@ -63,6 +76,14 @@ public class PlayerScore : MonoBehaviour
             quotaText.color = white;
             yield return new WaitForSeconds(flashDuration);
         }
+        yield return null;
+    }
+
+    private IEnumerator DieCo()
+    {
+        spriteRenderer.color = red;
+        yield return new WaitForSeconds(dieDuration);
+        Destroy(gameObject);
         yield return null;
     }
 }

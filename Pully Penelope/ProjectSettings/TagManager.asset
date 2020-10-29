@@ -7,6 +7,9 @@ TagManager:
   - Handle
   - Coin
   - Goal
+  - Box
+  - Quota
+  - Blade
   layers:
   - Default
   - TransparentFX
