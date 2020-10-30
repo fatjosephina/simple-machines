@@ -18,9 +18,11 @@ public class PlayerScore : MonoBehaviour
     private Button button;
     SpriteRenderer spriteRenderer;
     private float dieDuration = 1f;
+    private bool isDead = false;
 
     private void Start()
     {
+        isDead = false;
         quotaText = GameObject.FindWithTag("Quota").GetComponent<TMP_Text>();
         quotaText.text = "Quota : " + quota;
         button = quotaText.GetComponent<Button>();
@@ -30,7 +32,7 @@ public class PlayerScore : MonoBehaviour
 
     private void Update()
     {
-        if (quota == 0)
+        if (quota == 0 && !isDead)
         {
             quotaText.color = green;
         }
@@ -81,6 +83,7 @@ public class PlayerScore : MonoBehaviour
 
     private IEnumerator DieCo()
     {
+        isDead = true;
         spriteRenderer.color = red;
         yield return new WaitForSeconds(dieDuration);
         Destroy(gameObject);
