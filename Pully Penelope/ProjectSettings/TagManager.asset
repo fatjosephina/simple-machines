@@ -11,6 +11,7 @@ TagManager:
   - Quota
   - Blade
   - Objective
+  - Guillotine
   layers:
   - Default
   - TransparentFX
