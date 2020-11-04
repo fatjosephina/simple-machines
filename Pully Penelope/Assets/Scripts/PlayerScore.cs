@@ -8,7 +8,7 @@ public class PlayerScore : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text quotaText;
-    private int quota = 1;
+    private int quota = 3;
 
     private Color32 red = new Color32(255, 84, 84, 255);
     private Color32 green = new Color32(56, 216, 76, 255);

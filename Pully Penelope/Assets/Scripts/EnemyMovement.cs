@@ -22,6 +22,12 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private Transform guillotine;
 
+    private float playerInputValue;
+    private float waitTime = 0.1f;
+    private bool playerInputCoroutineStarted = false;
+    private bool isOnCooldown = false;
+    private float cooldownTime = 1f;
+
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
@@ -45,11 +51,21 @@ public class EnemyMovement : MonoBehaviour
                 }
                 else
                 {
-                    gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
+                    /*gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
                     target.gameObject.GetComponent<PlayerMovement>().enabled = false;
                     target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
                     transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
-                    target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);
+                    target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);*/
+                    if (!isOnCooldown)
+                    {
+                        StartCoroutine(KillPlayerCo());
+                    }
+                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
+                    {
+                        playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
+                        StartCoroutine(CheckIfSpammingButtonCo());
+                        Debug.Log(playerInputValue);
+                    }
                 }
             }
             else
@@ -57,5 +73,38 @@ public class EnemyMovement : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, homePosition, moveSpeed * Time.deltaTime);
             }
         }
+    }
+
+    private IEnumerator KillPlayerCo()
+    {
+        gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
+        target.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
+        transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
+        target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);
+        target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        yield return null;
+    }
+
+    private IEnumerator CheckIfSpammingButtonCo()
+    {
+        playerInputCoroutineStarted = true;
+        yield return new WaitForSeconds(waitTime);
+        if ((Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2 != playerInputValue)
+        {
+            /*yield return new WaitForSeconds(waitTime);
+            if ((Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2 != playerInputValue)
+            {
+                if (target != null)
+                {*/
+            target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+            isOnCooldown = true;
+                /*}
+            }*/
+        }
+        yield return new WaitForSeconds(cooldownTime);
+        isOnCooldown = false;
+        playerInputCoroutineStarted = false;
+        yield return null;
     }
 }
