@@ -100,8 +100,6 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
-        //positionChange.Normalize();
-        //rigidbody.velocity = new Vector2(positionChange.x * moveSpeed, positionChange.y * moveSpeed);
         if (handleName != null && grabFloat != 0)
         {
             handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
