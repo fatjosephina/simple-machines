@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         grabFloat = Input.GetAxisRaw("Jump");
         if (handleName != null && grabFloat != 0)
         {
-            switch (handleName)
+            /*switch (handleName)
             {
                 case "DHandle":
                     handleOrientation.x = 0;
@@ -55,7 +55,15 @@ public class PlayerMovement : MonoBehaviour
                     handleOrientation.y = 0;
                     positionChange.y = handleOrientation.y;
                     break;
-            }
+            }*/
+            /*if (handleAxis == "Vertical")
+             * {
+             *  positionChange.x = 0;
+             * }
+             * else if (handleAxis == "Horizontal")
+             * {
+             *  positionChange.y = 0;
+             * }*/
         }
     }
 
