@@ -4,39 +4,38 @@ using UnityEngine;
 
 public class Handle : MonoBehaviour
 {
-    public string Name { get; private set; }
-    private Vector2 handleOrientation;
-    public string handleAxis { get; private set; }
+    private string handleName;
+    public Vector2 HandleOrientation { get; private set; }
+    public string HandleAxis { get; private set; }
 
     private void Start()
     {
-        Name = name;
-        switch (Name)
+        handleName = name;
+        float handleX = HandleOrientation.x;
+        float handleY = HandleOrientation.y;
+        switch (name)
         {
             case "DHandle":
-                handleOrientation.x = 0;
-                //positionChange.x = handleOrientation.x;
-                handleOrientation.y = 1;
-                handleAxis = "Vertical";
+                handleX = 0;
+                handleY = 1;
+                HandleAxis = "Vertical";
                 break;
             case "UHandle":
-                handleOrientation.x = 0;
-                //positionChange.x = handleOrientation.x;
-                handleOrientation.y = -1;
-                handleAxis = "Vertical";
+                handleX = 0;
+                handleY = -1;
+                HandleAxis = "Vertical";
                 break;
             case "RHandle":
-                handleOrientation.x = -1;
-                handleOrientation.y = 0;
-                //positionChange.y = handleOrientation.y;
-                handleAxis = "Horizontal";
+                handleX = -1;
+                handleY = 0;
+                HandleAxis = "Horizontal";
                 break;
             case "LHandle":
-                handleOrientation.x = 1;
-                handleOrientation.y = 0;
-                //positionChange.y = handleOrientation.y;
-                handleAxis = "Horizontal";
+                handleX = 1;
+                handleY = 0;
+                HandleAxis = "Horizontal";
                 break;
         }
+        HandleOrientation = new Vector2(handleX, handleY);
     }
 }

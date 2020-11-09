@@ -10,11 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private new Rigidbody2D rigidbody;
     private Vector3 positionChange;
-    private float grabFloat = 0;
-    private bool canGrab;
+    private bool grabInput = false;
+    private bool isTouchingHandle;
     private GameObject handleObject;
     private Transform handleTransform;
     private string handleName;
+    private string handleAxis;
     private Vector2 handleOrientation;
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
@@ -30,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
         positionChange = Vector3.zero;
         positionChange.x = Input.GetAxisRaw("Horizontal");
         positionChange.y = Input.GetAxisRaw("Vertical");
-        grabFloat = Input.GetAxisRaw("Jump");
-        if (handleName != null && grabFloat != 0)
+        grabInput = Input.GetButton("Jump");
+        if (handleName != null && grabInput)
         {
             /*switch (handleName)
             {
@@ -56,14 +57,14 @@ public class PlayerMovement : MonoBehaviour
                     positionChange.y = handleOrientation.y;
                     break;
             }*/
-            /*if (handleAxis == "Vertical")
-             * {
-             *  positionChange.x = 0;
-             * }
-             * else if (handleAxis == "Horizontal")
-             * {
-             *  positionChange.y = 0;
-             * }*/
+            if (handleAxis == "Vertical")
+            {
+                positionChange.x = handleOrientation.x;
+            }
+            else if (handleAxis == "Horizontal")
+            {
+                positionChange.y = handleOrientation.y;
+            }
         }
     }
 
@@ -74,30 +75,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveAndAnimate()
     {
-        //Debug.Log(isGrabbingHandle);
         if (positionChange != Vector3.zero)
         {
             MovePlayer();
             if (!isGrabbingHandle)
             {
-                animator.SetFloat("moveX", positionChange.x);
-                animator.SetFloat("moveY", positionChange.y);
+                animator.SetFloat("orientationX", positionChange.x);
+                animator.SetFloat("orientationY", positionChange.y);
             }
-            /*else if (isGrabbingHandle && shouldUpdateAnimation)
-            {
-                Debug.Log("Work");
-                animator.SetFloat("moveX", handleOrientation.x);
-                animator.SetFloat("moveY", handleOrientation.y);
-                //shouldUpdateAnimation = false;
-            }*/
             animator.SetBool("isMoving", true);
         }
         else
         {
             if (isGrabbingHandle && shouldUpdateAnimation)
             {
-                animator.SetFloat("moveX", handleOrientation.x);
-                animator.SetFloat("moveY", handleOrientation.y);
+                animator.SetFloat("orientationX", handleOrientation.x);
+                animator.SetFloat("orientationY", handleOrientation.y);
                 shouldUpdateAnimation = false;
             }
             animator.SetBool("isMoving", false);
@@ -108,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
-        if (handleName != null && grabFloat != 0)
+        if (handleName != null && grabInput)
         {
             handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
@@ -125,10 +118,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckIfGrabbing()
     {
-        if (grabFloat != 0)
+        if (grabInput)
         {
             animator.SetBool("isGrabbing", true);
-            if (canGrab)
+            if (isTouchingHandle)
             {
                 isGrabbingHandle = true;
             }
@@ -149,8 +142,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Handle"))
         {
-            canGrab = true;
+            isTouchingHandle = true;
             handleName = collision.gameObject.name;
+            handleAxis = collision.gameObject.GetComponent<Handle>().HandleAxis;
+            handleOrientation = collision.gameObject.GetComponent<Handle>().HandleOrientation;
             handleObject = collision.gameObject.transform.parent.gameObject;
             handleTransform = handleObject.transform;
         }
@@ -160,8 +155,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Handle"))
         {
-            canGrab = false;
+            isTouchingHandle = false;
             handleName = null;
+            handleAxis = null;
+            handleOrientation = Vector2.zero;
             handleObject = null;
             handleTransform = null;
             isGrabbingHandle = false;
