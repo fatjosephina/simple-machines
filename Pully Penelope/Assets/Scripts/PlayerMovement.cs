@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the player's movement, as well as their grabbing and animations.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
@@ -28,35 +31,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        GetInput();
+    }
+
+    /// <summary>
+    /// Gets input from player and prevents limits them to one axis when holding onto the box.
+    /// </summary>
+    private void GetInput()
+    {
         positionChange = Vector3.zero;
         positionChange.x = Input.GetAxisRaw("Horizontal");
         positionChange.y = Input.GetAxisRaw("Vertical");
         grabInput = Input.GetButton("Jump");
         if (handleName != null && grabInput)
         {
-            /*switch (handleName)
-            {
-                case "DHandle":
-                    handleOrientation.x = 0;
-                    positionChange.x = handleOrientation.x;
-                    handleOrientation.y = 1;
-                    break;
-                case "UHandle":
-                    handleOrientation.x = 0;
-                    positionChange.x = handleOrientation.x;
-                    handleOrientation.y = -1;
-                    break;
-                case "RHandle":
-                    handleOrientation.x = -1;
-                    handleOrientation.y = 0;
-                    positionChange.y = handleOrientation.y;
-                    break;
-                case "LHandle":
-                    handleOrientation.x = 1;
-                    handleOrientation.y = 0;
-                    positionChange.y = handleOrientation.y;
-                    break;
-            }*/
             if (handleAxis == "Vertical")
             {
                 positionChange.x = handleOrientation.x;
@@ -73,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
         MoveAndAnimate();
     }
 
+    /// <summary>
+    /// Checks if the player is moving, and updates animations accordingly. If the player is grabbing onto
+    /// a box handle, their animation will reflect this.
+    /// </summary>
     private void MoveAndAnimate()
     {
         if (positionChange != Vector3.zero)
@@ -98,6 +90,9 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrabbing();
     }
 
+    /// <summary>
+    /// Moves the player as well as any objects attached to it.
+    /// </summary>
     private void MovePlayer()
     {
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
@@ -116,6 +111,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the player is grabbing anything, and updates their animation and isGrabbingHandle variable
+    /// to reflect this.
+    /// </summary>
     private void CheckIfGrabbing()
     {
         if (grabInput)

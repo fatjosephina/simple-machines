@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles enemy movement and related behavior.
+/// </summary>
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField]
@@ -39,6 +42,9 @@ public class EnemyMovement : MonoBehaviour
         CheckDistance();
     }
 
+    /// <summary>
+    /// Checks the distance between the player, and either tries to catch them or return to home base accordingly.
+    /// </summary>
     private void CheckDistance()
     {
         if (target != null)
@@ -58,12 +64,12 @@ public class EnemyMovement : MonoBehaviour
                     target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);*/
                     if (!isOnCooldown)
                     {
-                        StartCoroutine(KillPlayerCo());
+                        StartCoroutine(KillPlayerCoroutine());
                     }
                     if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
                     {
                         playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
-                        StartCoroutine(CheckIfSpammingButtonCo());
+                        StartCoroutine(CheckIfSpammingButtonCoroutine());
                         Debug.Log(playerInputValue);
                     }
                 }
@@ -75,7 +81,10 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator KillPlayerCo()
+    /// <summary>
+    /// Attaches itself to the player and attempts to kill them.
+    /// </summary>
+    private IEnumerator KillPlayerCoroutine()
     {
         gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
         target.gameObject.GetComponent<PlayerMovement>().enabled = false;
@@ -86,21 +95,17 @@ public class EnemyMovement : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator CheckIfSpammingButtonCo()
+    /// <summary>
+    /// Checks if the player is spamming buttons, and if they are, they will be released.
+    /// </summary>
+    private IEnumerator CheckIfSpammingButtonCoroutine()
     {
         playerInputCoroutineStarted = true;
         yield return new WaitForSeconds(waitTime);
         if ((Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2 != playerInputValue)
         {
-            /*yield return new WaitForSeconds(waitTime);
-            if ((Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2 != playerInputValue)
-            {
-                if (target != null)
-                {*/
             target.gameObject.GetComponent<PlayerMovement>().enabled = true;
             isOnCooldown = true;
-                /*}
-            }*/
         }
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;

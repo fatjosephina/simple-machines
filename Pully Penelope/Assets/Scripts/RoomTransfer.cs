@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the room transfer mechanic.
+/// </summary>
 public class RoomTransfer : MonoBehaviour
 {
     [SerializeField]
@@ -18,11 +21,6 @@ public class RoomTransfer : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        /*if (collision.CompareTag("Player"))
-        {
-            cameraTransform.position += cameraChange;
-        }*/
-
         if (collision.CompareTag("Player") || collision.CompareTag("Box"))
         {
             collision.gameObject.transform.position += playerChange;

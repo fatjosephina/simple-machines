@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// Takes care of the objective text's behavior.
+/// </summary>
 public class ObjectiveText : MonoBehaviour
 {
     [SerializeField]
@@ -25,10 +28,13 @@ public class ObjectiveText : MonoBehaviour
 
         objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! " + quota + ".";
 
-        StartCoroutine(FadeAwayCo(objectiveText, fadeTime));
+        StartCoroutine(FadeAwayCoroutine(objectiveText, fadeTime));
     }
 
-    private IEnumerator FadeAwayCo(TMP_Text text, float duration)
+    /// <summary>
+    /// Makes the objective text fade away.
+    /// </summary>
+    private IEnumerator FadeAwayCoroutine(TMP_Text text, float duration)
     {
         yield return new WaitForSeconds(waitTime);
 

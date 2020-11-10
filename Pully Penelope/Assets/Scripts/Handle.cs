@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Takes care of all handle objects.
+/// </summary>
 public class Handle : MonoBehaviour
 {
     private string handleName;
@@ -9,6 +12,14 @@ public class Handle : MonoBehaviour
     public string HandleAxis { get; private set; }
 
     private void Start()
+    {
+        SetHandleData();
+    }
+
+    /// <summary>
+    /// Sets the handle's properties and fields, such as HandleOrientation and HandleAxis.
+    /// </summary>
+    private void SetHandleData()
     {
         handleName = name;
         float handleX = HandleOrientation.x;
