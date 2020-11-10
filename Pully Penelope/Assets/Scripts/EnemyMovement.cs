@@ -104,7 +104,10 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if ((Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2 != playerInputValue)
         {
-            target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+            if (target != null)
+            {
+                target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+            }
             isOnCooldown = true;
         }
         yield return new WaitForSeconds(cooldownTime);

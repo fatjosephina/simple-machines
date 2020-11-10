@@ -16,18 +16,27 @@ public class ObjectiveText : MonoBehaviour
     private TMP_Text quotaText;
 
     [SerializeField]
+    private TMP_Text startButton;
+
+    [SerializeField]
     private string levelName = "Unknown";
 
     private string quota;
-    private float fadeTime = 5f;
-    private float waitTime = 1f;
+    private float fadeTime = 3f;
 
     private void Start()
     {
         quota = quotaText.text;
 
         objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! " + quota + ".";
+    }
 
+    /// <summary>
+    /// Hides the start button and calls the coroutine to fade the objective text.
+    /// </summary>
+    public void StartGame()
+    {
+        startButton.enabled = false;
         StartCoroutine(FadeAwayCoroutine(objectiveText, fadeTime));
     }
 
@@ -36,8 +45,6 @@ public class ObjectiveText : MonoBehaviour
     /// </summary>
     private IEnumerator FadeAwayCoroutine(TMP_Text text, float duration)
     {
-        yield return new WaitForSeconds(waitTime);
-
         float counter = 0;
         Color textColor = objectiveText.color;
 
@@ -50,6 +57,9 @@ public class ObjectiveText : MonoBehaviour
             yield return null;
         }
 
-        Destroy(text.gameObject);
+        if (text != null)
+        {
+            Destroy(text.gameObject);
+        }
     }
 }
