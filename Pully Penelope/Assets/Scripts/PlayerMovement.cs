@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    /// <summary>
-    /// As you can tell by the fields, this class essentially handles 5 things: movement, physics, animation,
-    /// grabbing, and handles. It also affects other game objects, namely the handleObject.
-    /// </summary>
     [SerializeField]
     private float moveSpeed = 4f;
 
@@ -23,23 +19,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
 
-    /// <summary>
-    /// Start gets the rigidbody and animator.
-    /// </summary>
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// Update checks for the horizontal axis, vertical axis, and jump axis (spacebar). Hori. and vert. are
-    /// used for movement, while jump is used for grabbing. It also checks if the player is grabbing by
-    /// verifying the handleName (name of game object which can be grabbed) and grabFloat (whether or not
-    /// the player is pressing down the spacebar). If they are being grabbed, then it determines the
-    /// handleOrientation, which is used to determine which directions the player can move while grabbing
-    /// the handleObject (and to set the animation later on).
-    /// </summary>
     private void Update()
     {
         positionChange = Vector3.zero;
@@ -74,28 +59,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// FixedUpdate calls the function to move and animate. The reason why animation happens here
-    /// and not in Update is because it does not make sense to have the character animate (for example,
-    /// a walking animation) unless it is actually doing what the animation is trying to represent
-    /// (for example, walking).
-    /// </summary>
     private void FixedUpdate()
     {
         MoveAndAnimate();
     }
 
-    /// <summary>
-    /// If the player is actually trying to move, MoveAndAnimate() will call MovePlayer(). Then, if they are
-    /// not grabbing the handle, the animator will be set to reflect the positionChange. The reason why this
-    /// does not happen when they are grabbing is because you cannot pull a chair with your back touching the
-    /// chair and your hands in front of you. Whether they are grabbing or not, the animator is set to reflect
-    /// that they are moving. If they are not moving, but they are grabbing and the bool shouldUpdateAnimation
-    /// is true, then they will change directions. This is because I want it to be impossible to move the
-    /// handleObject horizontally while grabbing the vertical handles and vice versa. So, if the player attempts
-    /// this, their orientation will change using the handleOrientation. Whether they are grabbing or not, their
-    /// moving animation is set to false. Finally, it checks if the player is grabbing.
-    /// </summary>
     private void MoveAndAnimate()
     {
         //Debug.Log(isGrabbingHandle);
@@ -129,12 +97,6 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrabbing();
     }
 
-    /// <summary>
-    /// MovePlayer() moves the player. But, it also moves whatever is "attached" to them. An object becomes
-    /// attached to them when they grab it. Both the other object and the player have an attachedObject
-    /// variable on them. It also sets the other object to its default bodyType if it is not being grabbed.
-    /// This prevents a glitch where the objects would start sliding when the player let go.
-    /// </summary>
     private void MovePlayer()
     {
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
@@ -153,11 +115,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// CheckIfGrabbing() checks if the player is grabbing, and updates the animator, isGrabbingHandle and
-    /// shouldUpdateAnimation, both of which are used in MoveAndAnimate() to control the animations of the
-    /// player.
-    /// </summary>
     private void CheckIfGrabbing()
     {
         if (grabFloat != 0)
@@ -180,9 +137,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// If the player enters a handle trigger, all of the necessary fields are set to reflect this.
-    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Handle"))
@@ -194,9 +148,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Likewise, if the player exits a handle trigger, the necessary fields are set to reflec this as well.
-    /// </summary>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Handle"))
