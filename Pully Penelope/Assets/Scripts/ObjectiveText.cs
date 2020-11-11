@@ -21,6 +21,9 @@ public class ObjectiveText : MonoBehaviour
     [SerializeField]
     private string levelName = "Unknown";
 
+    [SerializeField]
+    private Image darkBackground;
+
     private string quota;
     private float fadeTime = 3f;
 
@@ -37,6 +40,7 @@ public class ObjectiveText : MonoBehaviour
     public void StartGame()
     {
         startButton.enabled = false;
+        darkBackground.enabled = false;
         StartCoroutine(FadeAwayCoroutine(objectiveText, fadeTime));
     }
 
