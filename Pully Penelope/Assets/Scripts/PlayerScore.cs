@@ -4,12 +4,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the player's quota, as well as their loss and win.
+/// </summary>
 public class PlayerScore : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text quotaText;
     private int quota = 3;
 
+    private Color white;
     private Color32 red = new Color32(255, 84, 84, 255);
     private Color32 green = new Color32(56, 216, 76, 255);
     private int flashRepeat = 4;
@@ -25,6 +29,7 @@ public class PlayerScore : MonoBehaviour
         isDead = false;
         quotaText = GameObject.FindWithTag("Quota").GetComponent<TMP_Text>();
         quotaText.text = "Quota : " + quota;
+        white = quotaText.color;
         button = quotaText.GetComponent<Button>();
         button.enabled = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -55,7 +60,7 @@ public class PlayerScore : MonoBehaviour
             }
             else
             {
-                StartCoroutine(FlashRedCo());
+                StartCoroutine(FlashRedCoroutine());
             }
         }
 
@@ -64,13 +69,15 @@ public class PlayerScore : MonoBehaviour
             quotaText.text = "You Lose! Press here to replay!";
             button.enabled = true;
             quotaText.color = red;
-            StartCoroutine(DieCo());
+            StartCoroutine(DieCoroutine());
         }
     }
 
-    private IEnumerator FlashRedCo()
+    /// <summary>
+    /// Makes the quota text flash red when the player has not fulfilled their quota.
+    /// </summary>
+    private IEnumerator FlashRedCoroutine()
     {
-        Color white = quotaText.color;
         for (int i = 0; i < flashRepeat; i++)
         {
             quotaText.color = red;
@@ -81,7 +88,10 @@ public class PlayerScore : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator DieCo()
+    /// <summary>
+    /// Kills the player by turning them red and then destroying them.
+    /// </summary>
+    private IEnumerator DieCoroutine()
     {
         isDead = true;
         spriteRenderer.color = red;

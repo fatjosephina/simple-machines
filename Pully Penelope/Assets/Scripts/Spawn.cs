@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the spawn game object.
+/// </summary>
 public class Spawn : MonoBehaviour
 {
     [SerializeField]

@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// Takes care of the objective text's behavior.
+/// </summary>
 public class ObjectiveText : MonoBehaviour
 {
     [SerializeField]
@@ -13,25 +16,39 @@ public class ObjectiveText : MonoBehaviour
     private TMP_Text quotaText;
 
     [SerializeField]
+    private TMP_Text startButton;
+
+    [SerializeField]
     private string levelName = "Unknown";
 
+    [SerializeField]
+    private Image darkBackground;
+
     private string quota;
-    private float fadeTime = 5f;
-    private float waitTime = 1f;
+    private float fadeTime = 3f;
 
     private void Start()
     {
         quota = quotaText.text;
 
         objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! " + quota + ".";
-
-        StartCoroutine(FadeAwayCo(objectiveText, fadeTime));
     }
 
-    private IEnumerator FadeAwayCo(TMP_Text text, float duration)
+    /// <summary>
+    /// Hides the start button and calls the coroutine to fade the objective text.
+    /// </summary>
+    public void StartGame()
     {
-        yield return new WaitForSeconds(waitTime);
+        startButton.enabled = false;
+        darkBackground.enabled = false;
+        StartCoroutine(FadeAwayCoroutine(objectiveText, fadeTime));
+    }
 
+    /// <summary>
+    /// Makes the objective text fade away.
+    /// </summary>
+    private IEnumerator FadeAwayCoroutine(TMP_Text text, float duration)
+    {
         float counter = 0;
         Color textColor = objectiveText.color;
 
@@ -44,6 +61,9 @@ public class ObjectiveText : MonoBehaviour
             yield return null;
         }
 
-        Destroy(text.gameObject);
+        if (text != null)
+        {
+            Destroy(text.gameObject);
+        }
     }
 }

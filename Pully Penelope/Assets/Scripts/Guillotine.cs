@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the behavior of the guillotines.
+/// </summary>
 public class Guillotine : MonoBehaviour
 {
     private GameObject playerCharacter;

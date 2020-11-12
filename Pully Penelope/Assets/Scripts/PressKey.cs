@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the behavior of the press key object.
+/// </summary>
 public class PressKey : MonoBehaviour
 {
     private bool checkForGrab = false;
@@ -19,7 +22,7 @@ public class PressKey : MonoBehaviour
         {
             if (Input.GetAxisRaw("Jump") != 0)
             {
-                StartCoroutine(FadeAwayCo(pressKeySprite, fadeTime));
+                StartCoroutine(FadeAwayCoroutine(pressKeySprite, fadeTime));
             }
         }
     }
@@ -40,7 +43,10 @@ public class PressKey : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeAwayCo(SpriteRenderer spriteRenderer, float duration)
+    /// <summary>
+    /// Makes the game object fade away.
+    /// </summary>
+    private IEnumerator FadeAwayCoroutine(SpriteRenderer spriteRenderer, float duration)
     {
         float counter = 0;
         Color spriteColor = spriteRenderer.material.color;
