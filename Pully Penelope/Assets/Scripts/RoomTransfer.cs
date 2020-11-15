@@ -24,7 +24,7 @@ public class RoomTransfer : MonoBehaviour
         if (collision.CompareTag("Player") || collision.CompareTag("Box"))
         {
             collision.gameObject.transform.position += playerChange;
-            Debug.Log("Success");
+            //Debug.Log("Success");
             if (collision.gameObject.GetComponent<HandleParent>().attachedObject != null)
             {
                 collision.gameObject.GetComponent<HandleParent>().attachedObject.transform.position += playerChange;

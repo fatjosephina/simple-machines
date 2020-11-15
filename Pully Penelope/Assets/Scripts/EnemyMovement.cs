@@ -70,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
                     {
                         playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
                         StartCoroutine(CheckIfSpammingButtonCoroutine());
-                        Debug.Log(playerInputValue);
+                        //Debug.Log(playerInputValue);
                     }
                 }
             }
@@ -86,6 +86,7 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private IEnumerator KillPlayerCoroutine()
     {
+        target.gameObject.GetComponentInChildren<MovementPressKey>().shouldBeFast = true;
         gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
         target.gameObject.GetComponent<PlayerMovement>().enabled = false;
         target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
