@@ -30,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
     private bool playerInputCoroutineStarted = false;
     private bool isOnCooldown = false;
     private float cooldownTime = 1f;
+    private bool playerInRange = false;
 
     private void Start()
     {
@@ -51,7 +52,7 @@ public class EnemyMovement : MonoBehaviour
         {
             if (Vector3.Distance(target.position, transform.position) <= chaseRadius)
             {
-                if (Vector3.Distance(target.position, transform.position) > attackRadius)
+                if (/*Vector3.Distance(target.position, transform.position) > attackRadius*/!playerInRange)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
                 }
@@ -115,5 +116,23 @@ public class EnemyMovement : MonoBehaviour
         isOnCooldown = false;
         playerInputCoroutineStarted = false;
         yield return null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        /*if (collision.gameObject.CompareTag("PlayerHandle"))
+        {
+            target = collision.gameObject.transform.parent.gameObject.transform;
+        }*/
+        playerInRange = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        /*if (collision.gameObject.CompareTag("PlayerHandle"))
+        {
+            target = null;
+        }*/
+        playerInRange = false;
     }
 }

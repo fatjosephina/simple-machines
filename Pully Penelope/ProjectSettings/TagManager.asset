@@ -12,6 +12,7 @@ TagManager:
   - Blade
   - Objective
   - Guillotine
+  - PlayerHandle
   layers:
   - Default
   - TransparentFX
