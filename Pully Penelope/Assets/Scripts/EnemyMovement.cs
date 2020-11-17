@@ -31,6 +31,9 @@ public class EnemyMovement : MonoBehaviour
     private bool isOnCooldown = false;
     private float cooldownTime = 1f;
     private bool playerInRange = false;
+    private State state;
+    private Animator animator;
+    private Vector3 lastPosition;
 
     private enum State
     {
@@ -41,20 +44,49 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        state = State.Standard;
         target = GameObject.FindWithTag("Player").transform;
         homePosition = transform.position;
+        animator = GetComponent<Animator>();
+        lastPosition = transform.position;
     }
 
     private void Update()
     {
-        CheckDistance();
+        DefineState();
+        SetOrientation();
+    }
+
+    private void DefineState()
+    {
+        if (state == State.Standard)
+        {
+            BehaveStandard();
+        }
+        else if (state == State.Grabbing)
+        {
+            BehaveGrabbing();
+        }
+        else if (state == State.BeingGrabbed)
+        {
+            BehaveBeingGrabbed();
+        }
+    }
+
+    private void SetOrientation()
+    {
+        animator.SetFloat("orientationX", transform.position.x - lastPosition.x);
+        animator.SetFloat("orientationY", transform.position.y - lastPosition.y);
+        lastPosition = transform.position;
     }
 
     /// <summary>
     /// Checks the distance between the player, and either tries to catch them or return to home base accordingly.
     /// </summary>
-    private void CheckDistance()
+    private void BehaveStandard()
     {
+        animator.SetBool("isGrabbing", false);
+        animator.SetBool("isBeingGrabbed", false);
         if (target != null)
         {
             if (Vector3.Distance(target.position, transform.position) <= chaseRadius)
@@ -70,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
                     target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
                     transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
                     target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);*/
-                    if (!isOnCooldown)
+                    /*if (!isOnCooldown)
                     {
                         StartCoroutine(KillPlayerCoroutine());
                     }
@@ -78,8 +110,8 @@ public class EnemyMovement : MonoBehaviour
                     {
                         playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
                         StartCoroutine(CheckIfSpammingButtonCoroutine());
-                        //Debug.Log(playerInputValue);
-                    }
+                    }*/
+                    state = State.Grabbing;
                 }
             }
             else
@@ -87,6 +119,30 @@ public class EnemyMovement : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, homePosition, moveSpeed * Time.deltaTime);
             }
         }
+    }
+
+    private void BehaveGrabbing()
+    {
+        animator.SetBool("isGrabbing", true);
+        animator.SetBool("isBeingGrabbed", false);
+        if (!isOnCooldown)
+        {
+            StartCoroutine(KillPlayerCoroutine());
+        }
+        else
+        {
+            state = State.Standard;
+        }
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
+        {
+            playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
+            StartCoroutine(CheckIfSpammingButtonCoroutine());
+        }
+    }
+
+    private void BehaveBeingGrabbed()
+    {
+
     }
 
     /// <summary>
@@ -100,7 +156,7 @@ public class EnemyMovement : MonoBehaviour
         target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
         transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
         target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);
-        target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        //target.gameObject.GetComponent<PlayerMovement>().enabled = true;
         yield return null;
     }
 
@@ -115,7 +171,9 @@ public class EnemyMovement : MonoBehaviour
         {
             if (target != null)
             {
+                gameObject.GetComponent<HandleParent>().attachedObject = null;
                 target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+                target.gameObject.GetComponent<HandleParent>().attachedObject = null;
             }
             isOnCooldown = true;
         }
@@ -127,19 +185,17 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        /*if (collision.gameObject.CompareTag("PlayerHandle"))
+        if (collision.gameObject.CompareTag("PlayerHandle"))
         {
-            target = collision.gameObject.transform.parent.gameObject.transform;
-        }*/
-        playerInRange = true;
+            playerInRange = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        /*if (collision.gameObject.CompareTag("PlayerHandle"))
+        if (collision.gameObject.CompareTag("PlayerHandle"))
         {
-            target = null;
-        }*/
-        playerInRange = false;
+            playerInRange = false;
+        }
     }
 }

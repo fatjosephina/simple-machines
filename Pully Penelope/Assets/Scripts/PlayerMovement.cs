@@ -23,19 +23,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
 
-    private BoxCollider2D uHandle;
-    private BoxCollider2D dHandle;
-    private BoxCollider2D rHandle;
-    private BoxCollider2D lHandle;
-
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        uHandle = transform.Find("UHandle").GetComponent<BoxCollider2D>();
-        dHandle = transform.Find("DHandle").GetComponent<BoxCollider2D>();
-        rHandle = transform.Find("RHandle").GetComponent<BoxCollider2D>();
-        lHandle = transform.Find("LHandle").GetComponent<BoxCollider2D>();
+        animator.SetFloat("orientationX", 0);
+        animator.SetFloat("orientationY", -1);
     }
 
     private void Update()
@@ -107,16 +100,32 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
         if (handleName != null && grabInput)
         {
-            handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
-            handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
-            gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
+            if (handleObject.CompareTag("Box"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+                handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
+                gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
+            }
+            else if (handleObject.CompareTag("Enemy"))
+            {
+
+            }
         }
         else if (handleName != null)
         {
-            handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            handleObject.GetComponent<HandleParent>().attachedObject = null;
-            gameObject.GetComponent<HandleParent>().attachedObject = null;
+            if (handleObject.CompareTag("Box"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                handleObject.GetComponent<HandleParent>().attachedObject = null;
+                gameObject.GetComponent<HandleParent>().attachedObject = null;
+            }
+            else if (handleObject.CompareTag("Enemy"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                handleObject.GetComponent<HandleParent>().attachedObject = null;
+                gameObject.GetComponent<HandleParent>().attachedObject = null;
+            }
         }
     }
 
