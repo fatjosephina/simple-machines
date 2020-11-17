@@ -32,6 +32,13 @@ public class EnemyMovement : MonoBehaviour
     private float cooldownTime = 1f;
     private bool playerInRange = false;
 
+    private enum State
+    {
+        Standard,
+        Grabbing,
+        BeingGrabbed
+    }
+
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
