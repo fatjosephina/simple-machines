@@ -23,10 +23,19 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
 
+    private BoxCollider2D uHandle;
+    private BoxCollider2D dHandle;
+    private BoxCollider2D rHandle;
+    private BoxCollider2D lHandle;
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        uHandle = transform.Find("UHandle").GetComponent<BoxCollider2D>();
+        dHandle = transform.Find("DHandle").GetComponent<BoxCollider2D>();
+        rHandle = transform.Find("RHandle").GetComponent<BoxCollider2D>();
+        lHandle = transform.Find("LHandle").GetComponent<BoxCollider2D>();
     }
 
     private void Update()
