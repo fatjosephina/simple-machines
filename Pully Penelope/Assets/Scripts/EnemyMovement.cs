@@ -34,6 +34,7 @@ public class EnemyMovement : MonoBehaviour
     private State state;
     private Animator animator;
     private Vector3 lastPosition;
+    public bool isBeingGrabbed = false;
 
     private enum State
     {
@@ -48,6 +49,8 @@ public class EnemyMovement : MonoBehaviour
         target = GameObject.FindWithTag("Player").transform;
         homePosition = transform.position;
         animator = GetComponent<Animator>();
+        animator.SetFloat("orientationX", 0);
+        animator.SetFloat("orientationY", -1);
         lastPosition = transform.position;
     }
 
@@ -57,6 +60,9 @@ public class EnemyMovement : MonoBehaviour
         SetOrientation();
     }
 
+    /// <summary>
+    /// Calls the respective method for the correct state.
+    /// </summary>
     private void DefineState()
     {
         if (state == State.Standard)
@@ -73,10 +79,16 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the enemy's orientation
+    /// </summary>
     private void SetOrientation()
     {
-        animator.SetFloat("orientationX", transform.position.x - lastPosition.x);
-        animator.SetFloat("orientationY", transform.position.y - lastPosition.y);
+        float differenceX = transform.position.x - lastPosition.x;
+        animator.SetFloat("orientationX", differenceX);
+        float differenceY = transform.position.y - lastPosition.y;
+        //if (differenceX == 0 && differenceY == 0) { differenceY = -1; }
+        animator.SetFloat("orientationY", differenceY);
         lastPosition = transform.position;
     }
 
@@ -85,64 +97,79 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void BehaveStandard()
     {
-        animator.SetBool("isGrabbing", false);
-        animator.SetBool("isBeingGrabbed", false);
-        if (target != null)
+        if (!isBeingGrabbed)
         {
-            if (Vector3.Distance(target.position, transform.position) <= chaseRadius)
+            animator.SetBool("isGrabbing", false);
+            animator.SetBool("isBeingGrabbed", false);
+            if (target != null)
             {
-                if (/*Vector3.Distance(target.position, transform.position) > attackRadius*/!playerInRange)
+                if (Vector3.Distance(target.position, transform.position) <= chaseRadius)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                    if (!playerInRange)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        state = State.Grabbing;
+                    }
                 }
                 else
                 {
-                    /*gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
-                    target.gameObject.GetComponent<PlayerMovement>().enabled = false;
-                    target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
-                    transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
-                    target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);*/
-                    /*if (!isOnCooldown)
-                    {
-                        StartCoroutine(KillPlayerCoroutine());
-                    }
-                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
-                    {
-                        playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
-                        StartCoroutine(CheckIfSpammingButtonCoroutine());
-                    }*/
-                    state = State.Grabbing;
+                    transform.position = Vector3.MoveTowards(transform.position, homePosition, moveSpeed * Time.deltaTime);
                 }
             }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, homePosition, moveSpeed * Time.deltaTime);
-            }
-        }
-    }
-
-    private void BehaveGrabbing()
-    {
-        animator.SetBool("isGrabbing", true);
-        animator.SetBool("isBeingGrabbed", false);
-        if (!isOnCooldown)
-        {
-            StartCoroutine(KillPlayerCoroutine());
         }
         else
         {
-            state = State.Standard;
-        }
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
-        {
-            playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
-            StartCoroutine(CheckIfSpammingButtonCoroutine());
+            state = State.BeingGrabbed;
         }
     }
 
+    /// <summary>
+    /// Tries to kill the player or let them go.
+    /// </summary>
+    private void BehaveGrabbing()
+    {
+        if (!isBeingGrabbed)
+        {
+            animator.SetBool("isGrabbing", true);
+            animator.SetBool("isBeingGrabbed", false);
+            if (!isOnCooldown)
+            {
+                StartCoroutine(KillPlayerCoroutine());
+            }
+            else
+            {
+                state = State.Standard;
+            }
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
+            {
+                playerInputValue = (Input.GetAxisRaw("Horizontal") + Input.GetAxisRaw("Vertical")) / 2;
+                StartCoroutine(CheckIfSpammingButtonCoroutine());
+            }
+        }
+        else
+        {
+            state = State.BeingGrabbed;
+        }
+    }
+
+    /// <summary>
+    /// A vulnerable state where the enemy cannot do much.
+    /// </summary>
     private void BehaveBeingGrabbed()
     {
-
+        if (GetComponent<HandleParent>().attachedObject != null)
+        {
+            animator.SetBool("isGrabbing", false);
+            animator.SetBool("isBeingGrabbed", true);
+        }
+        else
+        {
+            isBeingGrabbed = false;
+            state = State.Standard;
+        }
     }
 
     /// <summary>
@@ -150,13 +177,15 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private IEnumerator KillPlayerCoroutine()
     {
-        target.gameObject.GetComponentInChildren<MovementPressKey>().shouldBeFast = true;
-        gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
-        target.gameObject.GetComponent<PlayerMovement>().enabled = false;
-        target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
-        transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
-        target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);
-        //target.gameObject.GetComponent<PlayerMovement>().enabled = true;
+        if (target != null)
+        {
+            target.gameObject.GetComponentInChildren<MovementPressKey>().shouldBeFast = true;
+            gameObject.GetComponent<HandleParent>().attachedObject = target.gameObject;
+            target.gameObject.GetComponent<PlayerMovement>().enabled = false;
+            target.gameObject.GetComponent<HandleParent>().attachedObject = gameObject;
+            transform.position = Vector3.MoveTowards(transform.position, guillotine.position, moveSpeed * Time.deltaTime);
+            target.position = Vector3.MoveTowards(target.position, guillotine.position, moveSpeed * Time.deltaTime);
+        }
         yield return null;
     }
 

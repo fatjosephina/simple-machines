@@ -45,15 +45,18 @@ public class PlayerMovement : MonoBehaviour
         positionChange.x = Input.GetAxisRaw("Horizontal");
         positionChange.y = Input.GetAxisRaw("Vertical");
         grabInput = Input.GetButton("Jump");
-        if (handleName != null && grabInput)
+        if (handleObject != null && handleObject.CompareTag("Box"))
         {
-            if (handleAxis == "Vertical")
+            if (handleName != null && grabInput)
             {
-                positionChange.x = handleOrientation.x;
-            }
-            else if (handleAxis == "Horizontal")
-            {
-                positionChange.y = handleOrientation.y;
+                if (handleAxis == "Vertical")
+                {
+                    positionChange.x = handleOrientation.x;
+                }
+                else if (handleAxis == "Horizontal")
+                {
+                    positionChange.y = handleOrientation.y;
+                }
             }
         }
     }
@@ -109,7 +112,12 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (handleObject.CompareTag("Enemy"))
             {
-
+                Debug.Log("Enemy grabbed!");
+                handleObject.GetComponent<EnemyMovement>().isBeingGrabbed = true;
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+                handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
+                gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
             }
         }
         else if (handleName != null)
