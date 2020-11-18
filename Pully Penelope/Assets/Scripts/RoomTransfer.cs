@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class RoomTransfer : MonoBehaviour
 {
+    [Tooltip("The change of the camera in between rooms.")]
     [SerializeField]
     private Vector3 cameraChange = new Vector3(0, 8, 0);
 
+    [Tooltip("The change of the player in between rooms.")]
     [SerializeField]
     private Vector3 playerChange = new Vector3(0, 2, 0);
 

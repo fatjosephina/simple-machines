@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("The speed of movement.")]
     [SerializeField]
     private float moveSpeed = 4f;
 

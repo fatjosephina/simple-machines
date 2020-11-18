@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Spawn : MonoBehaviour
 {
+    [Tooltip("The player character.")]
     [SerializeField]
     private GameObject playerCharacter;
 

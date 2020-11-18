@@ -8,7 +8,8 @@ using UnityEngine;
 public class Guillotine : MonoBehaviour
 {
     private GameObject playerCharacter;
-    
+
+    [Tooltip("The offset of the layer update.")]
     [SerializeField]
     private float offset;
     private SpriteRenderer spriteRenderer;

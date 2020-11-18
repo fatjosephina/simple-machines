@@ -7,21 +7,27 @@ using UnityEngine;
 /// </summary>
 public class EnemyMovement : MonoBehaviour
 {
+    [Tooltip("The speed of movement.")]
     [SerializeField]
     private float moveSpeed;
 
+    [Tooltip("The target of the enemy.")]
     [SerializeField]
     private Transform target;
 
+    [Tooltip("The home position.")]
     [SerializeField]
     private Vector3 homePosition;
 
+    [Tooltip("The radius at which the enemy will detect the player.")]
     [SerializeField]
     private float chaseRadius;
 
+    [Tooltip("The radius of attack.")]
     [SerializeField]
     private float attackRadius;
 
+    [Tooltip("The transform of the guillotine.")]
     [SerializeField]
     private Transform guillotine;
 
