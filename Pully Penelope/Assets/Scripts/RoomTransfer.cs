@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class RoomTransfer : MonoBehaviour
 {
+    [Tooltip("The change of the camera in between rooms.")]
     [SerializeField]
     private Vector3 cameraChange = new Vector3(0, 8, 0);
 
+    [Tooltip("The change of the player in between rooms.")]
     [SerializeField]
     private Vector3 playerChange = new Vector3(0, 2, 0);
 
@@ -24,7 +26,7 @@ public class RoomTransfer : MonoBehaviour
         if (collision.CompareTag("Player") || collision.CompareTag("Box"))
         {
             collision.gameObject.transform.position += playerChange;
-            Debug.Log("Success");
+            //Debug.Log("Success");
             if (collision.gameObject.GetComponent<HandleParent>().attachedObject != null)
             {
                 collision.gameObject.GetComponent<HandleParent>().attachedObject.transform.position += playerChange;

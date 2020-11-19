@@ -66,4 +66,12 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: EnableUHandle
+    data: 
+    objectReferenceParameter: {fileID: 9127639083773202469, guid: 43a847a32b9d60645889e42abb719f5d,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

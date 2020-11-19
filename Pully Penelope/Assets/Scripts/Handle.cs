@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class Handle : MonoBehaviour
 {
-    private string handleName;
     public Vector2 HandleOrientation { get; private set; }
     public string HandleAxis { get; private set; }
 
@@ -21,7 +20,6 @@ public class Handle : MonoBehaviour
     /// </summary>
     private void SetHandleData()
     {
-        handleName = name;
         float handleX = HandleOrientation.x;
         float handleY = HandleOrientation.y;
         switch (name)

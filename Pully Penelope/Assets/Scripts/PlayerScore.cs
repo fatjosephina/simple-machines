@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerScore : MonoBehaviour
 {
+    [Tooltip("The text of the quota.")]
     [SerializeField]
     private TMP_Text quotaText;
     private int quota = 3;
@@ -18,6 +19,8 @@ public class PlayerScore : MonoBehaviour
     private Color32 green = new Color32(56, 216, 76, 255);
     private int flashRepeat = 4;
     private float flashDuration = 0.25f;
+
+    [Tooltip("The win and loss button.")]
     [SerializeField]
     private Button button;
     SpriteRenderer spriteRenderer;

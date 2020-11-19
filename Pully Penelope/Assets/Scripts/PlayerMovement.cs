@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("The speed of movement.")]
     [SerializeField]
     private float moveSpeed = 4f;
 
@@ -27,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.SetFloat("orientationX", 0);
+        animator.SetFloat("orientationY", -1);
     }
 
     private void Update()
@@ -43,15 +46,18 @@ public class PlayerMovement : MonoBehaviour
         positionChange.x = Input.GetAxisRaw("Horizontal");
         positionChange.y = Input.GetAxisRaw("Vertical");
         grabInput = Input.GetButton("Jump");
-        if (handleName != null && grabInput)
+        if (handleObject != null && handleObject.CompareTag("Box"))
         {
-            if (handleAxis == "Vertical")
+            if (handleName != null && grabInput)
             {
-                positionChange.x = handleOrientation.x;
-            }
-            else if (handleAxis == "Horizontal")
-            {
-                positionChange.y = handleOrientation.y;
+                if (handleAxis == "Vertical")
+                {
+                    positionChange.x = handleOrientation.x;
+                }
+                else if (handleAxis == "Horizontal")
+                {
+                    positionChange.y = handleOrientation.y;
+                }
             }
         }
     }
@@ -98,16 +104,37 @@ public class PlayerMovement : MonoBehaviour
         rigidbody.MovePosition(transform.position + positionChange.normalized * moveSpeed * Time.fixedDeltaTime);
         if (handleName != null && grabInput)
         {
-            handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
-            handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
-            gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
+            if (handleObject.CompareTag("Box"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+                handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
+                gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
+            }
+            else if (handleObject.CompareTag("Enemy"))
+            {
+                Debug.Log("Enemy grabbed!");
+                handleObject.GetComponent<EnemyMovement>().isBeingGrabbed = true;
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
+                handleObject.GetComponent<HandleParent>().attachedObject = gameObject;
+                gameObject.GetComponent<HandleParent>().attachedObject = handleObject;
+            }
         }
         else if (handleName != null)
         {
-            handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            handleObject.GetComponent<HandleParent>().attachedObject = null;
-            gameObject.GetComponent<HandleParent>().attachedObject = null;
+            if (handleObject.CompareTag("Box"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                handleObject.GetComponent<HandleParent>().attachedObject = null;
+                gameObject.GetComponent<HandleParent>().attachedObject = null;
+            }
+            else if (handleObject.CompareTag("Enemy"))
+            {
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                handleObject.GetComponent<HandleParent>().attachedObject = null;
+                gameObject.GetComponent<HandleParent>().attachedObject = null;
+            }
         }
     }
 

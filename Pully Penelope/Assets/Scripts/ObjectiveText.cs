@@ -9,18 +9,23 @@ using UnityEngine.UI;
 /// </summary>
 public class ObjectiveText : MonoBehaviour
 {
+    [Tooltip("The text of the objective.")]
     [SerializeField]
     private TMP_Text objectiveText;
 
+    [Tooltip("The text of the quota.")]
     [SerializeField]
     private TMP_Text quotaText;
 
+    [Tooltip("The start button.")]
     [SerializeField]
     private TMP_Text startButton;
 
+    [Tooltip("The name of the level.")]
     [SerializeField]
     private string levelName = "Unknown";
 
+    [Tooltip("The dark background object.")]
     [SerializeField]
     private Image darkBackground;
 
