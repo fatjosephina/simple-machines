@@ -6601,6 +6601,7 @@ GameObject:
   - component: {fileID: 343645394}
   - component: {fileID: 343645396}
   - component: {fileID: 343645397}
+  - component: {fileID: 343645398}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Coin
@@ -6708,6 +6709,18 @@ CircleCollider2D:
   m_Offset: {x: -0.03, y: 0.02}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &343645398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343645393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e417f398ea0d144aa3669159bbdc777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &428530169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6894,6 +6907,7 @@ GameObject:
   - component: {fileID: 539875208}
   - component: {fileID: 539875207}
   - component: {fileID: 539875206}
+  - component: {fileID: 539875210}
   m_Layer: 0
   m_Name: Coin (1)
   m_TagString: Coin
@@ -7001,6 +7015,18 @@ Transform:
   m_Father: {fileID: 1542291562}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539875210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539875205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e417f398ea0d144aa3669159bbdc777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &562254267
 GameObject:
   m_ObjectHideFlags: 0
@@ -7013,8 +7039,9 @@ GameObject:
   - component: {fileID: 562254269}
   - component: {fileID: 562254268}
   - component: {fileID: 562254271}
+  - component: {fileID: 562254272}
   m_Layer: 0
-  m_Name: Spawn
+  m_Name: SpawnGoal
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7124,6 +7151,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &562254272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562254267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c51afaa1e44234e90556a7ee9faecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &647287812
 GameObject:
   m_ObjectHideFlags: 0
@@ -7451,6 +7490,7 @@ GameObject:
   - component: {fileID: 856657066}
   - component: {fileID: 856657065}
   - component: {fileID: 856657064}
+  - component: {fileID: 856657068}
   m_Layer: 0
   m_Name: Coin (2)
   m_TagString: Coin
@@ -7558,6 +7598,18 @@ Transform:
   m_Father: {fileID: 1542291562}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &856657068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856657063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e417f398ea0d144aa3669159bbdc777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &882093147
 GameObject:
   m_ObjectHideFlags: 0
@@ -8204,6 +8256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1293598568}
   - component: {fileID: 1293598569}
+  - component: {fileID: 1293598570}
   m_Layer: 0
   m_Name: Blade Trigger
   m_TagString: Blade
@@ -8251,6 +8304,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4068545, y: 0.2648248}
   m_EdgeRadius: 0
+--- !u!114 &1293598570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293598567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8767f207eba04f54b81b32b0b641da2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1347038042
 GameObject:
   m_ObjectHideFlags: 0
@@ -10647,6 +10712,7 @@ GameObject:
   - component: {fileID: 1507397329}
   - component: {fileID: 1507397328}
   - component: {fileID: 1507397330}
+  - component: {fileID: 1507397331}
   m_Layer: 5
   m_Name: Quota
   m_TagString: Quota
@@ -10823,6 +10889,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1507397331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507397326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1ffee7d14cdb748af3105a33955f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1542291561
 GameObject:
   m_ObjectHideFlags: 0

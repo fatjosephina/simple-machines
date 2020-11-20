@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour
     private bool playerInputCoroutineStarted = false;
     private bool isOnCooldown = false;
     private float cooldownTime = 1f;
-    private bool playerInRange = false;
+    public bool playerInRange = false;
     private State state;
     private Animator animator;
     private Vector3 lastPosition;
@@ -216,21 +216,5 @@ public class EnemyMovement : MonoBehaviour
         isOnCooldown = false;
         playerInputCoroutineStarted = false;
         yield return null;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerHandle"))
-        {
-            playerInRange = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerHandle"))
-        {
-            playerInRange = false;
-        }
     }
 }

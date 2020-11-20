@@ -164,30 +164,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    /// <summary>
+    /// Sets handle data to reflect the handle which the player entered
+    /// </summary>
+    public void HandleEntry(string nameOfHandle, string axisOfHandle, Vector2 orientationOfHandle, GameObject parentOfHandle)
     {
-        if (collision.gameObject.CompareTag("Handle"))
-        {
-            isTouchingHandle = true;
-            handleName = collision.gameObject.name;
-            handleAxis = collision.gameObject.GetComponent<Handle>().HandleAxis;
-            handleOrientation = collision.gameObject.GetComponent<Handle>().HandleOrientation;
-            handleObject = collision.gameObject.transform.parent.gameObject;
-            handleTransform = handleObject.transform;
-        }
+        isTouchingHandle = true;
+        handleName = nameOfHandle;
+        handleAxis = axisOfHandle;
+        handleOrientation = orientationOfHandle;
+        handleObject = parentOfHandle;
+        handleTransform = handleObject.transform;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    /// <summary>
+    /// Sets handle data to reflect that the player exited the handle
+    /// </summary>
+    public void HandleExit()
     {
-        if (collision.gameObject.CompareTag("Handle"))
-        {
-            isTouchingHandle = false;
-            handleName = null;
-            handleAxis = null;
-            handleOrientation = Vector2.zero;
-            handleObject = null;
-            handleTransform = null;
-            isGrabbingHandle = false;
-        }
+        isTouchingHandle = false;
+        handleName = null;
+        handleAxis = null;
+        handleOrientation = Vector2.zero;
+        handleObject = null;
+        handleTransform = null;
+        isGrabbingHandle = false;
     }
 }
