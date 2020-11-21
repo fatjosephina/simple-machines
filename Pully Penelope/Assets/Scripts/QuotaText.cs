@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -20,6 +21,10 @@ public class QuotaText : MonoBehaviour
     private int flashRepeat = 4;
     private float flashDuration = 0.25f;
     private bool isAlreadyFlashing = false;
+
+    public static event Action QuotaMet;
+    public static event Action GameWon;
+    public static event Action GameLost;
 
     private void Start()
     {
@@ -48,10 +53,12 @@ public class QuotaText : MonoBehaviour
         playerDead = player.isDead;
         if (quota <= 0 && !playerDead)
         {
+            QuotaMet?.Invoke();
             quotaText.color = green;
         }
         if (playerDead)
         {
+            GameLost?.Invoke();
             quotaText.text = "You Lose! Press here to replay!";
             button.enabled = true;
             quotaText.color = red;
@@ -63,8 +70,9 @@ public class QuotaText : MonoBehaviour
     /// </summary>
     private void OnGoalEntered()
     {
-        if (quota == 0)
+        if (quota <= 0)
         {
+            GameWon?.Invoke();
             quotaText.text = "You Win! Press here to replay!";
             button.enabled = true;
         }
