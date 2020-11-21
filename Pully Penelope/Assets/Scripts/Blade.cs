@@ -8,7 +8,6 @@ public class Blade : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") /*|| collision.gameObject.CompareTag("Enemy")*/)
         {
-            Debug.Log("Killed!");
             collision.gameObject.GetComponent<Death>().isDead = true;
         }
     }

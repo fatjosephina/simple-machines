@@ -11,7 +11,6 @@ public class Coin : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player collected coin!");
             CoinCollected?.Invoke();
             Destroy(gameObject);
         }

@@ -11,7 +11,6 @@ public class Goal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player entered goal!");
             GoalEntered?.Invoke();
         }
     }
