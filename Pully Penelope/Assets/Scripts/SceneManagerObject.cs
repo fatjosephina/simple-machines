@@ -15,4 +15,34 @@ public class SceneManagerObject : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    public void LoadLevelSelectScene()
+    {
+        SceneManager.LoadScene("LevelSelectScene");
+    }
+
+    public void LoadControlsScene()
+    {
+        SceneManager.LoadScene("ControlsScene");
+    }
+
+    public void LoadCreditsScene()
+    {
+        SceneManager.LoadScene("CreditsScene");
+    }
+
+    public void LoadSampleScene()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
 }
