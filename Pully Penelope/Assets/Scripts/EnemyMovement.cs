@@ -64,6 +64,8 @@ public class EnemyMovement : MonoBehaviour
     {
         DefineState();
         SetOrientation();
+        //Debug.Log(animator.GetFloat("orientationX"));
+        //Debug.Log(animator.GetFloat("orientationY"));
     }
 
     /// <summary>
@@ -90,11 +92,45 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void SetOrientation()
     {
-        float differenceX = transform.position.x - lastPosition.x;
-        animator.SetFloat("orientationX", differenceX);
-        float differenceY = transform.position.y - lastPosition.y;
-        //if (differenceX == 0 && differenceY == 0) { differenceY = -1; }
-        animator.SetFloat("orientationY", differenceY);
+        if (transform.position != lastPosition)
+        {
+            float differenceX = transform.position.x - lastPosition.x;
+            float differenceY = transform.position.y - lastPosition.y;
+            if (differenceX >= differenceY)
+            {
+                if (differenceX > 0)
+                {
+                    differenceX = Mathf.Ceil(differenceX);
+                }
+                else
+                {
+                    differenceX = Mathf.Floor(differenceX);
+                }
+                animator.SetFloat("orientationY", 0);
+                animator.SetFloat("orientationX", differenceX);
+            }
+            else
+            {
+                if (differenceY > 0)
+                {
+                    differenceY = Mathf.Ceil(differenceY);
+                }
+                else
+                {
+                    differenceY = Mathf.Floor(differenceY);
+                }
+                animator.SetFloat("orientationX", 0);
+                animator.SetFloat("orientationY", differenceY);
+            }
+        }
+        else
+        {
+            if (transform.position == homePosition)
+            {
+                animator.SetFloat("orientationX", 0);
+                animator.SetFloat("orientationY", -1);
+            }
+        }
         lastPosition = transform.position;
     }
 
