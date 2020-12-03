@@ -17688,6 +17688,7 @@ GameObject:
   - component: {fileID: 1491113728}
   - component: {fileID: 1491113729}
   - component: {fileID: 1491113730}
+  - component: {fileID: 1491113727}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -17830,6 +17831,19 @@ MonoBehaviour:
   guillotine: {fileID: 1103460586}
   playerInRange: 0
   isBeingGrabbed: 0
+--- !u!114 &1491113727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491113721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456e13646f354c64f9ad02f343b433d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!114 &1491113728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18278,6 +18292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f2024c495875d4a89076b99239d6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyObject: {fileID: 1491113721}
 --- !u!95 &1692001843
 Animator:
   serializedVersion: 3

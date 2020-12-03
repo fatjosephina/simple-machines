@@ -92,44 +92,54 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void SetOrientation()
     {
-        if (transform.position != lastPosition)
+        if (state != State.BeingGrabbed)
         {
-            float differenceX = transform.position.x - lastPosition.x;
-            float differenceY = transform.position.y - lastPosition.y;
-            if (differenceX >= differenceY)
+            if (transform.position != lastPosition)
             {
-                if (differenceX > 0)
+                float differenceX = transform.position.x - lastPosition.x;
+                float differenceY = transform.position.y - lastPosition.y;
+                if (differenceX >= differenceY)
                 {
-                    differenceX = Mathf.Ceil(differenceX);
+                    if (differenceX > 0)
+                    {
+                        differenceX = Mathf.Ceil(differenceX);
+                    }
+                    else
+                    {
+                        differenceX = Mathf.Floor(differenceX);
+                    }
+                    animator.SetFloat("orientationY", 0);
+                    animator.SetFloat("orientationX", differenceX);
                 }
                 else
                 {
-                    differenceX = Mathf.Floor(differenceX);
+                    if (differenceY > 0)
+                    {
+                        differenceY = Mathf.Ceil(differenceY);
+                    }
+                    else
+                    {
+                        differenceY = Mathf.Floor(differenceY);
+                    }
+                    animator.SetFloat("orientationX", 0);
+                    animator.SetFloat("orientationY", differenceY);
                 }
-                animator.SetFloat("orientationY", 0);
-                animator.SetFloat("orientationX", differenceX);
             }
             else
             {
-                if (differenceY > 0)
+                if (transform.position == homePosition)
                 {
-                    differenceY = Mathf.Ceil(differenceY);
+                    animator.SetFloat("orientationX", 0);
+                    animator.SetFloat("orientationY", -1);
                 }
-                else
-                {
-                    differenceY = Mathf.Floor(differenceY);
-                }
-                animator.SetFloat("orientationX", 0);
-                animator.SetFloat("orientationY", differenceY);
             }
         }
         else
         {
-            if (transform.position == homePosition)
-            {
-                animator.SetFloat("orientationX", 0);
-                animator.SetFloat("orientationY", -1);
-            }
+            float orientationX = GetComponent<HandleParent>().attachedObject.GetComponent<Animator>().GetFloat("orientationX");
+            float orientationY = GetComponent<HandleParent>().attachedObject.GetComponent<Animator>().GetFloat("orientationY");
+            animator.SetFloat("orientationX", orientationX);
+            animator.SetFloat("orientationY", orientationY);
         }
         lastPosition = transform.position;
     }

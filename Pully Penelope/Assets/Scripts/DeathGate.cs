@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathGate : MonoBehaviour
 {
-    /*private Animator animator;
+    private Animator animator;
     private Death enemy;
 
     [SerializeField]
@@ -26,5 +26,5 @@ public class DeathGate : MonoBehaviour
         {
             animator.SetBool("shouldOpen", false);
         }
-    }*/
+    }
 }
