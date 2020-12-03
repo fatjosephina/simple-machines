@@ -40,7 +40,6 @@ public class MovementPressKey : MonoBehaviour
         if (shouldBeFast)
         {
             StopCoroutine(FadeAwayCoroutine(pressKeySprite, fadeTime));
-            Debug.Log("Working");
             pressKeySprite.enabled = true;
             pressKeySprite.color = spriteColor;
             animator.SetBool("shouldBeFast", true);

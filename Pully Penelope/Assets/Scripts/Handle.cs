@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class Handle : MonoBehaviour
 {
-    public Vector2 HandleOrientation { get; private set; }
-    public string HandleAxis { get; private set; }
+    private Vector2 HandleOrientation { get; set; }
+    private string HandleAxis { get; set; }
 
     private void Start()
     {
@@ -46,5 +46,27 @@ public class Handle : MonoBehaviour
                 break;
         }
         HandleOrientation = new Vector2(handleX, handleY);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!gameObject.CompareTag("PlayerHandle"))
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().HandleEntry(name, HandleAxis, HandleOrientation, gameObject.transform.parent.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!gameObject.CompareTag("PlayerHandle"))
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().HandleExit();
+            }
+        }
     }
 }

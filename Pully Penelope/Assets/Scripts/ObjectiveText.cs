@@ -25,15 +25,16 @@ public class ObjectiveText : MonoBehaviour
     [SerializeField]
     private string levelName = "Unknown";
 
-    [Tooltip("The dark background object.")]
+    [Tooltip("The game object which controls pausing.")]
     [SerializeField]
-    private Image darkBackground;
+    private GameObject pauseController;
 
     private string quota;
     private float fadeTime = 3f;
 
     private void Start()
     {
+        pauseController.GetComponent<Pause>().ActivatePause();
         quota = quotaText.text;
 
         objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! " + quota + ".";
@@ -44,8 +45,8 @@ public class ObjectiveText : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        pauseController.GetComponent<Pause>().DeactivatePause();
         startButton.enabled = false;
-        darkBackground.enabled = false;
         StartCoroutine(FadeAwayCoroutine(objectiveText, fadeTime));
     }
 

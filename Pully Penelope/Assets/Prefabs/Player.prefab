@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3586921245027916226}
   - component: {fileID: 8607682244624456177}
-  - component: {fileID: 3307267847112547696}
+  - component: {fileID: 7505123005804600880}
   m_Layer: 0
   m_Name: DHandle
   m_TagString: PlayerHandle
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.62406373, y: 1.1378698}
   m_EdgeRadius: 0
---- !u!114 &3307267847112547696
+--- !u!114 &7505123005804600880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1953958543106994445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452db36c2f36454ab736c189f08db2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ca28a93dd9e8254fac8fd8065ae0b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2947934114610324674
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -592482153
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 6702704478347010636, guid: 3556d61bd6dd6e44b9c87578111779f3,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -255,8 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456e13646f354c64f9ad02f343b433d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quotaText: {fileID: 0}
-  button: {fileID: 0}
+  isDead: 0
 --- !u!114 &2947934114610324682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843390124899364319}
   - component: {fileID: 6535761923121026825}
-  - component: {fileID: 4416838070749514438}
+  - component: {fileID: 6003693137732639369}
   m_Layer: 0
   m_Name: RHandle
   m_TagString: PlayerHandle
@@ -339,7 +338,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0626562, y: 0.54879}
   m_EdgeRadius: 0
---- !u!114 &4416838070749514438
+--- !u!114 &6003693137732639369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,7 +347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5363110398405581872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452db36c2f36454ab736c189f08db2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ca28a93dd9e8254fac8fd8065ae0b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5433759595755352073
@@ -422,7 +421,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -592482153
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 8915e339ca1dedc419e5c2596429c5e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -476,7 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5402256798296493241}
   - component: {fileID: 4816921830296946822}
-  - component: {fileID: 1336000930857869882}
+  - component: {fileID: 2498324952107387409}
   m_Layer: 0
   m_Name: UHandle
   m_TagString: PlayerHandle
@@ -524,7 +523,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.698336, y: 1.5164833}
   m_EdgeRadius: 0
---- !u!114 &1336000930857869882
+--- !u!114 &2498324952107387409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,7 +532,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5531028459994179157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452db36c2f36454ab736c189f08db2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ca28a93dd9e8254fac8fd8065ae0b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6193100344410320029
@@ -546,7 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8854670200613708308}
   - component: {fileID: 2200294350648944687}
-  - component: {fileID: 3025780024429108699}
+  - component: {fileID: 416485985316116385}
   m_Layer: 0
   m_Name: LHandle
   m_TagString: PlayerHandle
@@ -594,7 +593,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1127807, y: 0.54878926}
   m_EdgeRadius: 0
---- !u!114 &3025780024429108699
+--- !u!114 &416485985316116385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -603,6 +602,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6193100344410320029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452db36c2f36454ab736c189f08db2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ca28a93dd9e8254fac8fd8065ae0b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
