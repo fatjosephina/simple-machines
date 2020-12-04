@@ -297,4 +297,9 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;
     }
+
+    private void OnDestroy()
+    {
+        state = State.BeingGrabbed;
+    }
 }
