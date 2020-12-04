@@ -10,10 +10,10 @@ public class PlayerHandleColliders : MonoBehaviour
     public void EnableUHandle()
     {
         EnableHandle("UHandle");
-        if (gameObject.name == "Enemy")
+        /*if (gameObject.name == "Enemy")
         {
             Debug.Log("UHandle enabled");
-        }
+        }*/
     }
     /// <summary>
     /// Enables the down handle
@@ -21,10 +21,10 @@ public class PlayerHandleColliders : MonoBehaviour
     public void EnableDHandle()
     {
         EnableHandle("DHandle");
-        if (gameObject.name == "Enemy")
+        /*if (gameObject.name == "Enemy")
         {
             Debug.Log("DHandle enabled");
-        }
+        }*/
     }
     /// <summary>
     /// Enables the right handle
@@ -32,10 +32,10 @@ public class PlayerHandleColliders : MonoBehaviour
     public void EnableRHandle()
     {
         EnableHandle("RHandle");
-        if (gameObject.name == "Enemy")
+        /*if (gameObject.name == "Enemy")
         {
             Debug.Log("RHandle enabled");
-        }
+        }*/
     }
     /// <summary>
     /// Enables the left handle
@@ -43,10 +43,10 @@ public class PlayerHandleColliders : MonoBehaviour
     public void EnableLHandle()
     {
         EnableHandle("LHandle");
-        if (gameObject.name == "Enemy")
+        /*if (gameObject.name == "Enemy")
         {
             Debug.Log("LHandle enabled");
-        }
+        }*/
     }
 
     /// <summary>
