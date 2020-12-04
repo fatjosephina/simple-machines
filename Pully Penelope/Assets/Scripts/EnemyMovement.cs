@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -35,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
     private float waitTime = 0.1f;
     private bool playerInputCoroutineStarted = false;
     private bool isOnCooldown = false;
-    private float cooldownTime = 1f;
+    private float cooldownTime = 2f;
     public bool playerInRange = false;
     private State state;
     private Animator animator;
@@ -46,7 +45,8 @@ public class EnemyMovement : MonoBehaviour
     {
         Standard,
         Grabbing,
-        BeingGrabbed
+        BeingGrabbed,
+        Cooldown
     }
 
     private void Start()
@@ -84,6 +84,10 @@ public class EnemyMovement : MonoBehaviour
         else if (state == State.BeingGrabbed)
         {
             BehaveBeingGrabbed();
+        }
+        else if (state == State.Cooldown)
+        {
+            BehaveCooldown();
         }
     }
 
@@ -193,7 +197,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                state = State.Standard;
+                state = State.Cooldown;
             }
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
             {
@@ -220,7 +224,30 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             isBeingGrabbed = false;
-            state = State.Standard;
+            isOnCooldown = true;
+            state = State.Cooldown;
+        }
+    }
+
+    /// <summary>
+    /// If the player is on cooldown, calls the InitiateCooldown() coroutine.
+    /// </summary>
+    private void BehaveCooldown()
+    {
+        if (!isBeingGrabbed)
+        {
+            if (!isOnCooldown)
+            {
+                state = State.Standard;
+            }
+            else
+            {
+                StartCoroutine(InitiateCooldown());
+            }
+        }
+        else
+        {
+            state = State.BeingGrabbed;
         }
     }
 
@@ -258,9 +285,16 @@ public class EnemyMovement : MonoBehaviour
             }
             isOnCooldown = true;
         }
-        yield return new WaitForSeconds(cooldownTime);
-        isOnCooldown = false;
         playerInputCoroutineStarted = false;
         yield return null;
+    }
+
+    /// <summary>
+    /// Waits for several seconds then sets the isOnCooldown to false.
+    /// </summary>
+    private IEnumerator InitiateCooldown()
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        isOnCooldown = false;
     }
 }
