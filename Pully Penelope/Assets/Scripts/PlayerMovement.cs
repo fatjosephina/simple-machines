@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (handleObject.CompareTag("Enemy"))
             {
-                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 handleObject.GetComponent<HandleParent>().attachedObject = null;
                 gameObject.GetComponent<HandleParent>().attachedObject = null;
             }

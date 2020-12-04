@@ -242,6 +242,8 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
+                animator.SetBool("isGrabbing", false);
+                animator.SetBool("isBeingGrabbed", false);
                 StartCoroutine(InitiateCooldown());
             }
         }
@@ -301,5 +303,13 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         state = State.BeingGrabbed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider2D>());
+        }
     }
 }
