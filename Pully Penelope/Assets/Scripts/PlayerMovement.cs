@@ -24,12 +24,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
 
+    private AudioSource attachSound;
+    private bool hasPlayedAttachSound = false;
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         animator.SetFloat("orientationX", 0);
         animator.SetFloat("orientationY", -1);
+        attachSound = GameObject.Find("AttachSound").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -150,10 +154,16 @@ public class PlayerMovement : MonoBehaviour
             if (isTouchingHandle)
             {
                 isGrabbingHandle = true;
+                if (!hasPlayedAttachSound)
+                {
+                    attachSound.Play();
+                    hasPlayedAttachSound = true;
+                }
             }
             else
             {
                 isGrabbingHandle = false;
+                hasPlayedAttachSound = false;
             }
         }
         else
@@ -161,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isGrabbing", false);
             isGrabbingHandle = false;
             shouldUpdateAnimation = true;
+            hasPlayedAttachSound = false;
         }
     }
 

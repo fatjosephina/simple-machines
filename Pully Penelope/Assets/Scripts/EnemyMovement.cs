@@ -41,6 +41,9 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 lastPosition;
     public bool isBeingGrabbed = false;
 
+    private AudioSource attachSound;
+    private bool hasPlayedAttachSound = false;
+
     private enum State
     {
         Standard,
@@ -58,6 +61,7 @@ public class EnemyMovement : MonoBehaviour
         animator.SetFloat("orientationX", 0);
         animator.SetFloat("orientationY", -1);
         lastPosition = transform.position;
+        attachSound = GameObject.Find("AttachSound").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -191,12 +195,18 @@ public class EnemyMovement : MonoBehaviour
         {
             animator.SetBool("isGrabbing", true);
             animator.SetBool("isBeingGrabbed", false);
+            if (!hasPlayedAttachSound)
+            {
+                attachSound.Play();
+                hasPlayedAttachSound = true;
+            }
             if (!isOnCooldown)
             {
                 StartCoroutine(KillPlayerCoroutine());
             }
             else
             {
+                hasPlayedAttachSound = false;
                 state = State.Cooldown;
             }
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0 && !playerInputCoroutineStarted)
@@ -207,6 +217,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
+            hasPlayedAttachSound = false;
             state = State.BeingGrabbed;
         }
     }
@@ -303,6 +314,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         state = State.BeingGrabbed;
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().enabled = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
