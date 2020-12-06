@@ -9,6 +9,10 @@ public class ButtonObject : MonoBehaviour
     private bool isPlayerTouching = false;
     public bool isBoxTouching = false;
 
+    [Tooltip("The sound that the button object makes.")]
+    [SerializeField]
+    private AudioSource buttonSound;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -33,12 +37,12 @@ public class ButtonObject : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = true;
-            Debug.Log("Player enter");
+            buttonSound.Play();
         }
         if (collision.gameObject.CompareTag("Box"))
         {
             isBoxTouching = true;
-            Debug.Log("Box enter");
+            buttonSound.Play();
         }
     }
 
@@ -47,12 +51,10 @@ public class ButtonObject : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = false;
-            Debug.Log("Player exit");
         }
         if (collision.gameObject.CompareTag("Box"))
         {
             isBoxTouching = false;
-            Debug.Log("Box exit");
         }
     }
 }
