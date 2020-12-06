@@ -117,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (handleObject.CompareTag("Enemy"))
             {
-                Debug.Log("Enemy grabbed!");
                 handleObject.GetComponent<EnemyMovement>().isBeingGrabbed = true;
                 handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
@@ -201,5 +200,13 @@ public class PlayerMovement : MonoBehaviour
         handleObject = null;
         handleTransform = null;
         isGrabbingHandle = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (Camera.main != null)
+        {
+            Camera.main.GetComponent<AudioListener>().enabled = true;
+        }
     }
 }

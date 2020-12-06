@@ -26,6 +26,11 @@ public class QuotaText : MonoBehaviour
     public static event Action GameWon;
     public static event Action GameLost;
 
+    [Tooltip("The sound to be played upon meeting the quota.")]
+    [SerializeField]
+    private AudioSource quotaCollectionSound;
+    private bool hasQuotaCollectionSoundPlayed = false;
+
     private void Start()
     {
         quotaText = GetComponent<TMP_Text>();
@@ -54,6 +59,11 @@ public class QuotaText : MonoBehaviour
         if (quota <= 0 && !playerDead)
         {
             QuotaMet?.Invoke();
+            if (!hasQuotaCollectionSoundPlayed)
+            {
+                quotaCollectionSound.Play();
+                hasQuotaCollectionSoundPlayed = true;
+            }
             quotaText.color = green;
         }
         if (playerDead)

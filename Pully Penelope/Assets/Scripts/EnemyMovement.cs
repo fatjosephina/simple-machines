@@ -44,6 +44,15 @@ public class EnemyMovement : MonoBehaviour
     private AudioSource attachSound;
     private bool hasPlayedAttachSound = false;
 
+    [Tooltip("The sound to be played when the player is in range.")]
+    [SerializeField]
+    private AudioSource playerSpottedSound;
+    private bool hasPlayedPlayerSpottedSound = false;
+
+    [Tooltip("The sound to be played when the enemy is vulnerable.")]
+    [SerializeField]
+    private AudioSource vulnerableSound;
+
     private enum State
     {
         Standard,
@@ -68,8 +77,6 @@ public class EnemyMovement : MonoBehaviour
     {
         DefineState();
         SetOrientation();
-        //Debug.Log(animator.GetFloat("orientationX"));
-        //Debug.Log(animator.GetFloat("orientationY"));
     }
 
     /// <summary>
@@ -165,6 +172,11 @@ public class EnemyMovement : MonoBehaviour
             {
                 if (Vector3.Distance(target.position, transform.position) <= chaseRadius)
                 {
+                    if (!hasPlayedPlayerSpottedSound)
+                    {
+                        playerSpottedSound.Play();
+                        hasPlayedPlayerSpottedSound = true;
+                    }
                     if (!playerInRange)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
@@ -177,6 +189,7 @@ public class EnemyMovement : MonoBehaviour
                 else
                 {
                     transform.position = Vector3.MoveTowards(transform.position, homePosition, moveSpeed * Time.deltaTime);
+                    hasPlayedPlayerSpottedSound = false;
                 }
             }
         }
@@ -231,9 +244,14 @@ public class EnemyMovement : MonoBehaviour
         {
             animator.SetBool("isGrabbing", false);
             animator.SetBool("isBeingGrabbed", true);
+            if (!vulnerableSound.isPlaying)
+            {
+                vulnerableSound.Play();
+            }
         }
         else
         {
+            vulnerableSound.Stop();
             isBeingGrabbed = false;
             isOnCooldown = true;
             state = State.Cooldown;
@@ -314,6 +332,10 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         state = State.BeingGrabbed;
+        if (vulnerableSound != null)
+        {
+            vulnerableSound.Stop();
+        }
         if (GameObject.FindWithTag("Player") != null)
         {
             GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().enabled = true;
