@@ -314,7 +314,10 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         state = State.BeingGrabbed;
-        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().enabled = true;
+        if (GameObject.FindWithTag("Player") != null)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().enabled = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
