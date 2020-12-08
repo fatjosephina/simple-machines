@@ -83,7 +83,7 @@ public class QuotaText : MonoBehaviour
         if (quota <= 0)
         {
             GameWon?.Invoke();
-            quotaText.text = "You Win! Press here to replay!";
+            quotaText.text = "You Win! Press here to go the main menu!";
             button.enabled = true;
         }
         else
