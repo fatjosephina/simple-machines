@@ -209,4 +209,13 @@ public class PlayerMovement : MonoBehaviour
             Camera.main.GetComponent<AudioListener>().enabled = true;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Collision"))
+        {
+            rigidbody.bodyType = RigidbodyType2D.Static;
+            rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
 }

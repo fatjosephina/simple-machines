@@ -15,6 +15,7 @@ TagManager:
   - PlayerHandle
   - Enemy
   - BoxTrigger
+  - Collision
   layers:
   - Default
   - TransparentFX
