@@ -73,7 +73,7 @@ public class QuotaText : MonoBehaviour
         if (playerDead)
         {
             GameLost?.Invoke();
-            quotaText.text = "You Lose! Press here to replay!";
+            quotaText.text = "You Lose! Pause (ESC/P) to restart!";
             button.enabled = true;
             quotaImage.enabled = true;
             quotaText.color = red;
@@ -88,7 +88,7 @@ public class QuotaText : MonoBehaviour
         if (quota <= 0)
         {
             GameWon?.Invoke();
-            quotaText.text = "You Win! Press here to go the main menu!";
+            quotaText.text = "You Win! Press here to go to the main menu!";
             button.enabled = true;
             quotaImage.enabled = true;
         }
