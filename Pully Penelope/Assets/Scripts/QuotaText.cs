@@ -13,6 +13,8 @@ public class QuotaText : MonoBehaviour
     private Death player;
     private bool playerDead;
 
+    [Tooltip("The quota to be used in the script.")]
+    [SerializeField]
     private int quota = 3;
 
     private Color white;
@@ -31,6 +33,7 @@ public class QuotaText : MonoBehaviour
     private AudioSource quotaCollectionSound;
     private bool hasQuotaCollectionSoundPlayed = false;
 
+    [Tooltip("The image under the quota button.")]
     [SerializeField]
     private Image quotaImage;
 
