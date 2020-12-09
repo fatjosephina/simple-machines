@@ -75,6 +75,7 @@ public class QuotaText : MonoBehaviour
             GameLost?.Invoke();
             quotaText.text = "You Lose! Press here to replay!";
             button.enabled = true;
+            quotaImage.enabled = true;
             quotaText.color = red;
         }
     }
