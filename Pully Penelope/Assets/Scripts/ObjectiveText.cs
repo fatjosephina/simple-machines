@@ -37,7 +37,7 @@ public class ObjectiveText : MonoBehaviour
         pauseController.GetComponent<Pause>().ActivatePause();
         quota = quotaText.text;
 
-        objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! " + quota + ".";
+        objectiveText.text = "Fulfill your loot quota and make your escape from the " + levelName + "! \n" + quota + ".";
     }
 
     /// <summary>
