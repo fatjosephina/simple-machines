@@ -31,6 +31,9 @@ public class QuotaText : MonoBehaviour
     private AudioSource quotaCollectionSound;
     private bool hasQuotaCollectionSoundPlayed = false;
 
+    [SerializeField]
+    private Image quotaImage;
+
     private void Start()
     {
         quotaText = GetComponent<TMP_Text>();
@@ -38,6 +41,7 @@ public class QuotaText : MonoBehaviour
         white = quotaText.color;
         button = quotaText.GetComponent<Button>();
         button.enabled = false;
+        quotaImage.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Death>();
     }
 
@@ -85,6 +89,7 @@ public class QuotaText : MonoBehaviour
             GameWon?.Invoke();
             quotaText.text = "You Win! Press here to go the main menu!";
             button.enabled = true;
+            quotaImage.enabled = true;
         }
         else
         {
