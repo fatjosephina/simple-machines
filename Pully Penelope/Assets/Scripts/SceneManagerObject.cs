@@ -57,6 +57,30 @@ public class SceneManagerObject : MonoBehaviour
     }
 
     /// <summary>
+    /// Loads the first level, called the Rookie's Ridge in-game.
+    /// </summary>
+    public void LoadLevel1Scene()
+    {
+        SceneManager.LoadScene("Level1Scene");
+    }
+
+    /// <summary>
+    /// Loads the second level, called the Grandfather Grotto in-game.
+    /// </summary>
+    public void LoadLevel2Scene()
+    {
+        SceneManager.LoadScene("Level2Scene");
+    }
+
+    /// <summary>
+    /// Loads the third level, called the Cave of Courage in-game.
+    /// </summary>
+    public void LoadLevel3Scene()
+    {
+        SceneManager.LoadScene("Level3Scene");
+    }
+
+    /// <summary>
     /// Loads the sample scene, called the Test Level in-game.
     /// </summary>
     public void LoadSampleScene()
