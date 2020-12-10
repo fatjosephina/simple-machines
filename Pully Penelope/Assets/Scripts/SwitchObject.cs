@@ -7,6 +7,10 @@ public class SwitchObject : MonoBehaviour
     private Animator animator;
     public bool isOn = false;
 
+    [Tooltip("The sound that the switch object makes.")]
+    [SerializeField]
+    private AudioSource switchSound;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -25,6 +29,7 @@ public class SwitchObject : MonoBehaviour
     /// </summary>
     private void FlipSwitch()
     {
+        switchSound.Play();
         if (animator.GetBool("isOn"))
         {
             animator.SetBool("isOn", false);

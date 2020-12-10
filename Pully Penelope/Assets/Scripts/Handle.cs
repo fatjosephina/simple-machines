@@ -54,7 +54,10 @@ public class Handle : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerMovement>().HandleEntry(name, HandleAxis, HandleOrientation, gameObject.transform.parent.gameObject);
+                if (collision.gameObject.GetComponent<HandleParent>().attachedObject == null || collision.gameObject.GetComponent<HandleParent>().attachedObject == transform.parent.gameObject)
+                {
+                    collision.gameObject.GetComponent<PlayerMovement>().HandleEntry(name, HandleAxis, HandleOrientation, gameObject.transform.parent.gameObject);
+                }
             }
         }
     }

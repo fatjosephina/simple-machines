@@ -24,12 +24,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrabbingHandle;
     private bool shouldUpdateAnimation = true;
 
+    private AudioSource attachSound;
+    private bool hasPlayedAttachSound = false;
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         animator.SetFloat("orientationX", 0);
         animator.SetFloat("orientationY", -1);
+        attachSound = GameObject.Find("AttachSound").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -113,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (handleObject.CompareTag("Enemy"))
             {
-                Debug.Log("Enemy grabbed!");
                 handleObject.GetComponent<EnemyMovement>().isBeingGrabbed = true;
                 handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 handleObject.GetComponent<Rigidbody2D>().MovePosition(handleTransform.position + positionChange.normalized * moveSpeed * Time.deltaTime);
@@ -131,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (handleObject.CompareTag("Enemy"))
             {
-                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                handleObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 handleObject.GetComponent<HandleParent>().attachedObject = null;
                 gameObject.GetComponent<HandleParent>().attachedObject = null;
             }
@@ -150,10 +153,16 @@ public class PlayerMovement : MonoBehaviour
             if (isTouchingHandle)
             {
                 isGrabbingHandle = true;
+                if (!hasPlayedAttachSound)
+                {
+                    attachSound.Play();
+                    hasPlayedAttachSound = true;
+                }
             }
             else
             {
                 isGrabbingHandle = false;
+                hasPlayedAttachSound = false;
             }
         }
         else
@@ -161,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isGrabbing", false);
             isGrabbingHandle = false;
             shouldUpdateAnimation = true;
+            hasPlayedAttachSound = false;
         }
     }
 
@@ -190,5 +200,22 @@ public class PlayerMovement : MonoBehaviour
         handleObject = null;
         handleTransform = null;
         isGrabbingHandle = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (Camera.main != null)
+        {
+            Camera.main.GetComponent<AudioListener>().enabled = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Collision"))
+        {
+            rigidbody.bodyType = RigidbodyType2D.Static;
+            rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
     }
 }

@@ -13,6 +13,8 @@ public class QuotaText : MonoBehaviour
     private Death player;
     private bool playerDead;
 
+    [Tooltip("The quota to be used in the script.")]
+    [SerializeField]
     private int quota = 3;
 
     private Color white;
@@ -26,6 +28,15 @@ public class QuotaText : MonoBehaviour
     public static event Action GameWon;
     public static event Action GameLost;
 
+    [Tooltip("The sound to be played upon meeting the quota.")]
+    [SerializeField]
+    private AudioSource quotaCollectionSound;
+    private bool hasQuotaCollectionSoundPlayed = false;
+
+    [Tooltip("The image under the quota button.")]
+    [SerializeField]
+    private Image quotaImage;
+
     private void Start()
     {
         quotaText = GetComponent<TMP_Text>();
@@ -33,6 +44,7 @@ public class QuotaText : MonoBehaviour
         white = quotaText.color;
         button = quotaText.GetComponent<Button>();
         button.enabled = false;
+        quotaImage.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Death>();
     }
 
@@ -54,13 +66,19 @@ public class QuotaText : MonoBehaviour
         if (quota <= 0 && !playerDead)
         {
             QuotaMet?.Invoke();
+            if (!hasQuotaCollectionSoundPlayed)
+            {
+                quotaCollectionSound.Play();
+                hasQuotaCollectionSoundPlayed = true;
+            }
             quotaText.color = green;
         }
         if (playerDead)
         {
             GameLost?.Invoke();
-            quotaText.text = "You Lose! Press here to replay!";
+            quotaText.text = "You Lose! Pause (ESC/P) to restart!";
             button.enabled = true;
+            quotaImage.enabled = true;
             quotaText.color = red;
         }
     }
@@ -73,8 +91,9 @@ public class QuotaText : MonoBehaviour
         if (quota <= 0)
         {
             GameWon?.Invoke();
-            quotaText.text = "You Win! Press here to replay!";
+            quotaText.text = "You Win! Press here to go to the main menu!";
             button.enabled = true;
+            quotaImage.enabled = true;
         }
         else
         {

@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 2947934114610324683}
   - component: {fileID: 2947934114610324682}
   - component: {fileID: 3182810852047076404}
+  - component: {fileID: 1923495156305539580}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -198,7 +199,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000333786, y: -0.5601455}
+  m_Offset: {x: -0.00000333786, y: -0.5422039}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -209,7 +210,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7488167, y: 0.38031793}
+  m_Size: {x: 0.7488167, y: 0.34443474}
   m_EdgeRadius: 0
 --- !u!114 &2947934114610324681
 MonoBehaviour:
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  deathSound: {fileID: 0}
 --- !u!114 &2947934114610324682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +282,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7ea5cb7123fb1438e016cf47267f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &1923495156305539580
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2947934114610324674}
+  m_Enabled: 1
 --- !u!1 &5363110398405581872
 GameObject:
   m_ObjectHideFlags: 0
