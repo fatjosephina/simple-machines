@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/PenelopediaScene.unity
+    guid: bc5ed08045df8c440ac612b23756f052
+  - enabled: 1
     path: Assets/Scenes/TopSecretScene.unity
     guid: aca2338ee5132d74e9f220fe2ca5e784
   m_configObjects: {}

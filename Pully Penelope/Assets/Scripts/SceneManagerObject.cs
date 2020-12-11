@@ -89,7 +89,15 @@ public class SceneManagerObject : MonoBehaviour
     }
 
     /// <summary>
-    /// Loads the second bonus scene, called the !TOP SECRET! in-game.
+    /// Loads the first custom bonus scene, called the Penelopedia in-game.
+    /// </summary>
+    public void LoadPenelopediaScene()
+    {
+        SceneManager.LoadScene("PenelopediaScene");
+    }
+
+    /// <summary>
+    /// Loads the second custom bonus scene, called the !TOP SECRET! in-game.
     /// </summary>
     public void LoadTopSecretScene()
     {
