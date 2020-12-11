@@ -87,4 +87,12 @@ public class SceneManagerObject : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+
+    /// <summary>
+    /// Loads the second bonus scene, called the !TOP SECRET! in-game.
+    /// </summary>
+    public void LoadTopSecretScene()
+    {
+        SceneManager.LoadScene("TopSecretScene");
+    }
 }
