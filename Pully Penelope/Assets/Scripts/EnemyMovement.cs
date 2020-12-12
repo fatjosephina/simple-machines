@@ -84,21 +84,20 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     private void DefineState()
     {
-        if (state == State.Standard)
+        switch (state)
         {
-            BehaveStandard();
-        }
-        else if (state == State.Grabbing)
-        {
-            BehaveGrabbing();
-        }
-        else if (state == State.BeingGrabbed)
-        {
-            BehaveBeingGrabbed();
-        }
-        else if (state == State.Cooldown)
-        {
-            BehaveCooldown();
+            case State.Standard:
+                BehaveStandard();
+                break;
+            case State.Grabbing:
+                BehaveGrabbing();
+                break;
+            case State.BeingGrabbed:
+                BehaveBeingGrabbed();
+                break;
+            case State.Cooldown:
+                BehaveCooldown();
+                break;
         }
     }
 
