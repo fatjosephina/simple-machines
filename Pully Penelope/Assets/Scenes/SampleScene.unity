@@ -13010,6 +13010,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 651441695}
+        m_MethodName: DeactivatePause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &572266182
 GameObject:
   m_ObjectHideFlags: 0
@@ -22370,6 +22381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1ffee7d14cdb748af3105a33955f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quota: 3
   quotaCollectionSound: {fileID: 1420172859}
   quotaImage: {fileID: 32050740}
 --- !u!1001 &1507499513
